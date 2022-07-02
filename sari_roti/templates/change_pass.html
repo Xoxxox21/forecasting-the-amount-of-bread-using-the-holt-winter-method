@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Password Change{% endblock title %}
+{% block content %}
+<!-- Form Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Change Password</h6>
+                <form action="{% url 'ganti-password' %}" method="post">
+                    {% comment %} <div class="mb-3">
+                        <label for="previous_password" class="form-label">Previous Password</label>
+                        <input type="password" class="form-control" id="previous_password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="new_password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="repeat_password" class="form-label">Repeat Password</label>
+                        <input type="password" class="form-control" id="repeat_password">
+                    </div> {% endcomment %}
+                        {% csrf_token %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{error}}
+                            </div>
+                        {% endfor %}
+
+                        {% for field in form %}
+                            <div class="form-group">
+                                {{field.label}}
+                                {{field}}
+                            </div>
+                            
+                            {% if field.errors %}
+                                <div class="alert alert-danger">
+                                    {{field.error}}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    <button type="submit" class="btn btn-primary">Ganti password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Form End -->
+{% endblock %}

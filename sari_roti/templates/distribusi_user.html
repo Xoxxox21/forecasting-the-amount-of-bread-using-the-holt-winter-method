@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Data Droping{% endblock title %}
+{% block content %}
+<!-- Recent Sales Start -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Data Distribusi</h6>
+                <h2 class="mb-0">{{nama_toko}}</h6>
+                {% comment %} {% if distribusi.id%} {% endcomment %}
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                      Pilih Toko
+                    </a>
+                    
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    {% for ada in data_toko %}
+                      <li><a class="dropdown-item" href="{% url 'distribusi-toko' ada.kode%}">{{ada.nama}}</a></li>
+                    {% endfor %}
+                    </ul>
+                  </div>
+                {% comment %} {% endif %} {% endcomment %}
+            </div>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Kode Roti</th>
+                            <th scope="col">Jumlah Roti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in data_distribusi %}
+                        <tr>
+                            <td>{{data.roti_id__kode}}</td>
+                            <td>{{data.dropping}}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Recent Sales End -->
+{% endblock %}

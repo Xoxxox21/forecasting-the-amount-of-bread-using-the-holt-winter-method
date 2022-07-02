@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Data Roti{% endblock title %}
+{% block active %}
+<div class="navbar-nav w-100">
+    <a href="{% url 'index' %}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Kelola Data</a>
+        <div class="dropdown-menu bg-transparent border-0">
+            <a href="{% url 'data-toko'%}" class="dropdown-item nav-link" name="toko"><i class="fa fa-warehouse px-2 me-2"></i>Toko</a>
+            <a href="{% url 'data-sales'%}" class="dropdown-item nav-link" name="sales"><i class="fa fa-user-friends px-2 me-2"></i>Sales</a>
+            <a href="{% url 'data-roti'%}" class="dropdown-item nav-link active" name="roti"><i class="fa fa-star px-2 me-2"></i>Roti</a>
+        </div>
+    </div>
+    <a href="{% url 'data-distribusi'%}" class="nav-item nav-link"><i class="fa fa-industry me-2"></i>Distribusi</a>
+    <a href="{% url 'data-jadwal-kunjungan'%}" class="nav-item nav-link"><i class="fa fa-calendar-day me-2"></i>jadwal Kunjungan</a>
+</div>
+{% endblock active %}
+{% block content %}
+
+<!-- button tambah start-->
+<div class="m-n2">
+    <a href="{% url 'tambah-roti' %}">
+        <button type="button" class="btn nav-link btn-danger m-4"  style="color: aliceblue;"><i class="fa fa-plus me-2"></i>Tambah</button>
+    </a>
+</div>
+<!-- button tambah end -->
+
+<!-- Table Start -->
+<div class="container-fluid pt-3 px-3">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Daftar Roti</h6>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-dark">
+                                <th scope="col">Kode Roti</th>
+                                <th scope="col">Nama Roti</th>
+                                <th scope="col">Harga Roti</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            {% for message in messages %}
+                                    {% if message %}
+                                        <div class="alert alert-success">{{ message }}</div>
+                                    {% endif%}
+                            {% endfor %}
+                            {% for name in data_roti %}
+                            <tr>
+                                <td align="left">{{name.kode}}</td>
+                                <td align="left">{{name.nama}}</td>
+                                <td align="left">Rp. {{name.harga}}</td>
+                                <td>
+                                    <a href="{% url 'update-roti' name.kode %}">
+                                        <button type="button" class="btn btn-primary">Ubah</button>
+                                    </a>
+                                    <a href="{% url 'hapus-roti' name.kode %}"><button type="button" class="btn btn-success" name="hapus_roti">Hapus</button></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Table End -->
+{% endblock %}

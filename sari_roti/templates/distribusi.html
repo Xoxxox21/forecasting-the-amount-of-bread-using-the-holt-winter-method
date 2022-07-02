@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}Data Distribusi{% endblock title %}
+
+{% block active %}
+<div class="navbar-nav w-100">
+    <a href="{% url 'index' %}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Kelola Data</a>
+        <div class="dropdown-menu bg-transparent border-0">
+            <a href="{% url 'data-toko'%}" class="dropdown-item nav-link" name="toko"><i class="fa fa-warehouse px-2 me-2"></i>Toko</a>
+            <a href="{% url 'data-sales'%}" class="dropdown-item nav-link" name="sales"><i class="fa fa-user-friends px-2 me-2"></i>Sales</a>
+            <a href="{% url 'data-roti'%}" class="dropdown-item nav-link" name="roti"><i class="fa fa-star px-2 me-2"></i>Roti</a>
+        </div>
+    </div>
+    <a href="{% url 'data-distribusi'%}" class="nav-item nav-link active"><i class="fa fa-industry me-2"></i>Distribusi</a>
+    <a href="{% url 'data-jadwal-kunjungan'%}" class="nav-item nav-link"><i class="fa fa-calendar-day me-2"></i>jadwal Kunjungan</a>
+</div>
+{% endblock active %}
+
+{% block content %}
+<!-- button tambah start-->
+<div class="m-n2">
+    <a href="{% url 'droping' %}">
+        <button type="button" class="btn nav-link btn-danger m-4"  style="color: aliceblue;"><i class="fa fa-plus me-2"></i>Tambah</button>
+    </a>
+</div>
+<!-- button tambah end -->
+
+<!-- Recent Sales Start -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Data Distribusi</h6>
+                <h2 class="mb-0">{{nama_toko}}</h6>
+                {% comment %} {% if distribusi.id%} {% endcomment %}
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                      Pilih Toko
+                    </a>
+                    
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    {% for ada in data_toko %}
+                      <li><a class="dropdown-item" href="{% url 'distribusi-toko' ada.kode%}">{{ada.nama}}</a></li>
+                    {% endfor %}
+                    </ul>
+                  </div>
+                {% comment %} {% endif %} {% endcomment %}
+            </div>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-dark">
+                            <th scope="col" rowspan="2">Tanggal</th>
+                            {% for roti in data_roti %}
+                            <th scope="col" colspan="2">{{roti.kode}}</th>
+                            {% endfor %}
+                        </tr>
+                        <tr class="text-dark">
+                            {% for roti in data_roti %}
+                            <th scope="col">JD</th>
+                            <th scope="col">JS</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in temp %}
+                        <tr>
+                            <td align="center">{{data}}</td>
+                            {% for name in data_distribusi %}
+                                {% if data == name.tanggal %}
+                                    <td align="center">{{name.dropping}}</td>
+                                    {% if name.roti_sisa == null %}
+                                    <td align="center">
+                                        <div class="m-n2">
+                                            <a href="{% url 'isi-sisa' name.id %}">
+                                                <button type="button" class="btn btn-primary">Sisa</button>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    {% else %}
+                                        <td align="center">{{name.roti_sisa}}</td>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Recent Sales End -->
+{% endblock %}

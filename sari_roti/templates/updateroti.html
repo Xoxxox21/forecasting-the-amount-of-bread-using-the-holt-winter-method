@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Update Data Roti{% endblock title %}
+{% block content %}
+<!-- Form Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Update Data Roti</h6>
+                <form action="{% url 'update-roti' roti.kode %}" method="post">
+                    {% for message in messages %}
+                        {% if message %}
+                            <div class="alert alert-success">{{ message }}</div>
+                        {% endif%}
+                    {% endfor %}
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button class="btn btn-primary">Ubah</button>
+                    <a href="/data-roti/" class="btn btn-danger">Kembali</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Form End -->
+{% endblock %}
