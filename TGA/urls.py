@@ -1,8 +1,10 @@
+from re import template
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LoginView,LogoutView, PasswordChangeView, PasswordChangeDoneView
 from sari_roti.views import *
-from django.urls import reverse_lazy
+from django.views.generic import TemplateView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,7 +24,8 @@ urlpatterns = [
     path('droping/', droping, name='droping'),
     path('data-distribusi/tambah/<int:id_distribusi>', isi_sisa, name='isi-sisa'),
     path('data-distribusi/<str:kode>/', DistribusiPerToko, name='distribusi-toko'),
-    path('data-distribusi-user/', DistribusiUser, name='distribusi-user'),
+    path('data-distribusi-sales/', DistribusiUser, name='distribusi-sales'),
+    path('data-distribusi-sales/<str:kode>/', DistribusiUserToko, name='distribusi-sales-toko'),
     
     path('data-roti/', roti, name='data-roti'),
     path('tambah-roti/', tambahroti, name='tambah-roti'),
@@ -34,9 +37,9 @@ urlpatterns = [
     path('data-jadwal/ubah/<int:id_jadwal>', updatejadwal, name='update-jadwal'),
     path('data-jadwal/hapus/<int:id_jadwal>', hapus_jadwal, name='hapus-jadwal'),
     
-    # path('login/', login_view, name='login_view'),    
-    # path('keluar/', LogoutView.as_view(next_page='masuk'), name='keluar'),
-    path('ganti-password/', PasswordChangeView.as_view(template_name='change_pass.html'), name='ganti-password'),
-    path('ganti-password/done/', PasswordChangeDoneView.as_view(template_name='change_pass_done.html'),name='password_change_done'),
+    # path('register/',register, name='register'),
+    path('login/',login_page, name='login'),
+    path('Logout/', Logout_page, name='Logout'),
+    path('ganti-password/', PasswordsChangeView, name='ganti-password'),
     
 ]

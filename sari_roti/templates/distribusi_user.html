@@ -5,8 +5,7 @@
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">Data Distribusi</h6>
-                <h2 class="mb-0">{{nama_toko}}</h6>
+                <h6 class="mb-0">Data Dropping {{nama_toko}}</h6>
                 {% comment %} {% if distribusi.id%} {% endcomment %}
                 <div class="dropdown">
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -15,7 +14,7 @@
                     
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     {% for ada in data_toko %}
-                      <li><a class="dropdown-item" href="{% url 'distribusi-toko' ada.kode%}">{{ada.nama}}</a></li>
+                      <li><a class="dropdown-item" href="{% url 'distribusi-sales-toko' ada.kode%}">{{ada.nama}}</a></li>
                     {% endfor %}
                     </ul>
                   </div>
@@ -32,7 +31,7 @@
                     <tbody>
                     {% for data in data_distribusi %}
                         <tr>
-                            <td>{{data.roti_id__kode}}</td>
+                            <td>{{data.roti_id}}</td>
                             <td>{{data.dropping}}</td>
                         </tr>
                     {% endfor %}

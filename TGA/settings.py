@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'TGA.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql',#sudo -u postgres psql postgres
         'NAME': 'sari_roti_tga',
         'USER': 'postgres',
         'PASSWORD': 'jeumala123',
@@ -128,4 +128,6 @@ STATICFILES_DIRS=[
     os.path.join(BASE_DIR, 'static'),
 ]
 
+LOGIN_REDIRECT_URL = '/index'
+LOGOUT_REDIRECT_URL = '/login'
 # AUTH_USER_MODEL = 'sari_roti.UserAccount'

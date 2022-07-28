@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Password Change{% endblock title %}
+{% block active %}
+<div class="navbar-nav w-100">
+    <a href="{% url 'index' %}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Kelola Data</a>
+        <div class="dropdown-menu bg-transparent border-0">
+            <a href="{% url 'data-toko'%}" class="dropdown-item nav-link" name="toko"><i class="fa fa-warehouse px-2 me-2"></i>Toko</a>
+            <a href="{% url 'data-sales'%}" class="dropdown-item nav-link" name="sales"><i class="fa fa-user-friends px-2 me-2"></i>Sales</a>
+            <a href="{% url 'data-roti'%}" class="dropdown-item nav-link" name="roti"><i class="fa fa-star px-2 me-2"></i>Roti</a>
+        </div>
+    </div>
+    <a href="{% url 'data-distribusi'%}" class="nav-item nav-link"><i class="fa fa-industry me-2"></i>Distribusi</a>
+    <a href="{% url 'data-jadwal-kunjungan'%}" class="nav-item nav-link"><i class="fa fa-calendar-day me-2"></i>jadwal Kunjungan</a>
+</div>
+{% endblock active %}
+{% block content %}
+<!-- Form Start -->
+{% if messages %}
+<div class="alert alert-success">{{ messages }}</div>
+{% endif %}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light justify-content-center rounded h-100 p-4">
+                <h6 class="mb-4">Change Password</h6>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text">Old Password</span>
+                        </div>
+                        {{form.old_password}}
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text">New Password</i></span>
+                        </div>
+                        {{form.new_password1}}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text">Repeat New Password</span>
+                        </div>
+                        {{form.new_password2}}
+                    </div>
+
+                    <div class="d-flex mt-3 login_container">
+                        <input class="btn btn-primary login_btn" style="margin-right: 20px; width: auto;" type="submit" value="Change Password">
+                        {% if request.user.is_staff %}
+                        <a href="/index/" class="btn btn-danger">Kembali</a>
+                        {% else %}
+                        <a href="/data-distribusi-sales" class="btn btn-danger">Kembali</a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Form End -->
+{% endblock %}
