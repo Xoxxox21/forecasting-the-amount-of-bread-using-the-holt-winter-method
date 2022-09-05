@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #judul {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: auto;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 5px;
+            font-size: large;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div id="judul">
+                Tanggal : {{tanggal}}<br>
+                Toko : {{kode}}
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kode Roti</th>
+                            <th>Nama Roti</th>
+                            <th>Dropping</th>
+                            {% if request.user.is_staff %}
+                            <th>Sisa</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for name in data_distribusi %}
+                        <tr>
+                            <td>{{name.roti_id}}</td>
+                            <td>{{name.roti_id.nama}}</td>
+                            <td>{{name.dropping}}</td>
+                            {% if request.user.is_staff %}
+                                {% if name.roti_sisa == None %}
+                                    <td>  </td>
+                                {% else %}
+                                    <td>{{name.roti_sisa}}</td>
+                                {% endif %}
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        {% for y in jumlah %}
+                        <tr>
+                            <td colspan="2" align="center">Total</td>
+                            <td>{{y.jumlah_drop}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

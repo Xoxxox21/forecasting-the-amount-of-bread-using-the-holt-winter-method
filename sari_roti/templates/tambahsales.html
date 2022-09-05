@@ -19,7 +19,7 @@
 <!-- Form Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-sm-12 col-xl-6">
+        <div class="col-sm-12 col-xl-7">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Tambah Sales</h6>
                 <form action="/tambah-sales/" method="post">
@@ -27,7 +27,76 @@
                         <div class="alert alert-success">{{ pesan }}</div>
                     {% endif%}
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 115px;">
+                                <span class="input-group-text">Nik:</span>
+                            </div>
+                            {{ form.nik }}
+                        </div>
+    
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 95px;">
+                                <span class="input-group-text">Nama:</i></span>
+                            </div>
+                           {{ form.nama }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="" style="margin-right: 85px;">
+                                <span class="input-group-text">alamat:</span>
+                            </div>
+                            {{ form.alamat }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 95px;">
+                                <span class="input-group-text">No Hp:</span>
+                            </div>
+                            {{ form.no_hp }}
+                        </div>
+    
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 100px;">
+                                <span class="input-group-text">Email:</i></span>
+                            </div>
+                           {{ form.Email }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 90px;">
+                                <span class="input-group-text">Alamat:</span>
+                            </div>
+                            {{ form.alamat }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 40px;">
+                                <span class="input-group-text">Jenis Kelamin:</span>
+                            </div>
+                            {{ form.jenis_kelamin }}
+                        </div>
+    
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 95px;">
+                                <span class="input-group-text">Status:</i></span>
+                            </div>
+                           {{ form.status }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 65px;">
+                                <span class="input-group-text">Sales Tipe:</span>
+                            </div>
+                            {{ form.sales_type }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 40px;">
+                                <span class="input-group-text">Tanggal Mulai:</span>
+                            </div>
+                            {{ form.tanggal_mulai }}
+                        </div>
+    
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 20px;">
+                                <span class="input-group-text">Tanggal Berakhir:</i></span>
+                            </div>
+                           {{ form.tanggal_berakhir }}
+                        </div>
                     <button class="btn btn-primary"> Tambah</button>
                     <a href="/data-sales/" class="btn btn-danger">Kembali</a>
                 </form>

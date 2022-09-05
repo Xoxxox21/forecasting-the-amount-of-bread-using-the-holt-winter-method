@@ -31,4 +31,6 @@ def admin_only(view_func):
                 return redirect('distribusi-sales')
             if group == 'admin':
                 return view_func(request, *args, **kwargs)
+            else:
+                return redirect('login')
     return wrapper_func

@@ -29,7 +29,25 @@
                         <div class="alert alert-success">{{ pesan }}</div>
                     {% endif%}
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 50px;">
+                            <span class="input-group-text">Sales:</span>
+                        </div>
+                        {{ form.sales_id }}
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 55px;">
+                            <span class="input-group-text">Toko:</i></span>
+                        </div>
+                       {{ form.toko_id }}
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="" style="margin-right: 60px;">
+                            <span class="input-group-text">Hari:</span>
+                        </div>
+                        {{ form.hari }}
+                    </div>
                     <button class="btn btn-primary"> Tambah</button>
                     <a href="/data-jadwal/" class="btn btn-danger">Kembali</a>
                 </form>

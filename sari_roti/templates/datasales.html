@@ -19,7 +19,7 @@
 <!-- button tambah start-->
 <div class="m-n2">
     <a href="{% url 'tambah-sales' %}">
-        <button type="button" class="btn nav-link btn-danger m-4"  style="color: aliceblue;"><i class="fa fa-plus me-2"></i>Tambah</button>
+        <button type="button" class="btn nav-link btn-primary m-4"  style="color: aliceblue;"><i class="fa fa-plus me-2"></i>Tambah</button>
     </a>
 </div>
 <!-- button tambah end -->
@@ -68,7 +68,7 @@
                                 <td align="center">{{name.tanggal_berakhir}}</td>
                                 <td>
                                     <a href="{% url 'update-sales' name.nik %}">
-                                        <button type="button" class="btn btn-primary">Ubah</button>
+                                        <button type="button" class="btn btn-primary m-1">Ubah</button>
                                     </a>
                                     <a href="{% url 'hapus-sales' name.nik %}"><button type="button" class="btn btn-success" name="hapus_sales">Hapus</button></a>
                                 </td>

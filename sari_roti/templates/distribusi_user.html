@@ -1,30 +1,34 @@
 {% extends 'base.html' %}
 {% block title %}Data Droping{% endblock title %}
 {% block content %}
+
 <!-- Recent Sales Start -->
-    <div class="container-fluid pt-4 px-4">
-        <div class="bg-light text-center rounded p-4">
-            <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">Data Dropping {{nama_toko}}</h6>
-                {% comment %} {% if distribusi.id%} {% endcomment %}
-                <div class="dropdown">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                      Pilih Toko
-                    </a>
-                    
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    {% for ada in data_toko %}
-                      <li><a class="dropdown-item" href="{% url 'distribusi-sales-toko' ada.kode%}">{{ada.nama}}</a></li>
-                    {% endfor %}
-                    </ul>
-                  </div>
-                {% comment %} {% endif %} {% endcomment %}
-            </div>
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light text-center rounded p-4">
+        <h6 class="mb-0">Data Dropping {{nama_toko}}</h6>
+        <h6 class="mb-0">tanggal : {{date}}</h6>
+        <br>
+            
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                  Pilih Toko
+                </a>
+                
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                {% for ada in data_toko %}
+                  <li><a class="dropdown-item" href="{% url 'distribusi-sales-toko' ada.kode%}">{{ada.nama}}</a></li>
+                {% endfor %}
+                </ul>
+              </div>
+        </div>
+        {% if ada %}
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
                             <th scope="col">Kode Roti</th>
+                            <th scope="col">Nama Roti</th>
                             <th scope="col">Jumlah Roti</th>
                         </tr>
                     </thead>
@@ -32,13 +36,31 @@
                     {% for data in data_distribusi %}
                         <tr>
                             <td>{{data.roti_id}}</td>
+                            <td>{{data.roti_id.nama}}</td>
                             <td>{{data.dropping}}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for y in jumlah %}
+                        <tr>
+                            <td colspan="2" align="center">Total</td>
+                            <td>{{y.jumlah_drop}}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
+                <form action="">
+                    <div name = 'tanggal' style="padding-top: 10%;">
+                        <button type="button" class="btn btn-primary"><a href="{% url 'pdf' kode_toko date%}" style="color: aliceblue;">pdf</a></button>
+                    </div>
+                </form>
             </div>
-        </div>
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Tidak ada jadwal hari ini untuk toko ini</h4>
+                <p>Silahkan pilih toko lain</p>
+            </div>
+        {% endif %}
     </div>
-    <!-- Recent Sales End -->
+</div>
+<!-- Recent Sales End -->
 {% endblock %}

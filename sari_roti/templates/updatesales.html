@@ -1,10 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}Update Data Sales{% endblock title %}
+{% block active %}
+<div class="navbar-nav w-100">
+    <a href="{% url 'index' %}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Kelola Data</a>
+        <div class="dropdown-menu bg-transparent border-0">
+            <a href="{% url 'data-toko'%}" class="dropdown-item nav-link" name="toko"><i class="fa fa-warehouse px-2 me-2"></i>Toko</a>
+            <a href="{% url 'data-sales'%}" class="dropdown-item nav-link active" name="sales"><i class="fa fa-user-friends px-2 me-2"></i>Sales</a>
+            <a href="{% url 'data-roti'%}" class="dropdown-item nav-link" name="roti"><i class="fa fa-star px-2 me-2"></i>Roti</a>
+        </div>
+    </div>
+    <a href="{% url 'data-distribusi'%}" class="nav-item nav-link"><i class="fa fa-industry me-2"></i>Distribusi</a>
+    <a href="{% url 'data-jadwal-kunjungan'%}" class="nav-item nav-link"><i class="fa fa-calendar-day me-2"></i>jadwal Kunjungan</a>
+</div>
+{% endblock active %}
 {% block content %}
 <!-- Form Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-sm-12 col-xl-6">
+        <div class="col-sm-12 col-xl-7">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Update Data Sales</h6>
                 <form action="{% url 'update-sales' sales.nik %}" method="post">
@@ -14,7 +29,76 @@
                         {% endif%}
                     {% endfor %}
                     {% csrf_token %}
-                    {{form.as_p}}
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 115px;">
+                            <span class="input-group-text">Nik:</span>
+                        </div>
+                        {{ form.nik }}
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 95px;">
+                            <span class="input-group-text">Nama:</i></span>
+                        </div>
+                       {{ form.nama }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="" style="margin-right: 85px;">
+                            <span class="input-group-text">alamat:</span>
+                        </div>
+                        {{ form.alamat }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 95px;">
+                            <span class="input-group-text">No Hp:</span>
+                        </div>
+                        {{ form.no_hp }}
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 100px;">
+                            <span class="input-group-text">Email:</i></span>
+                        </div>
+                       {{ form.Email }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 90px;">
+                            <span class="input-group-text">Alamat:</span>
+                        </div>
+                        {{ form.alamat }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 40px;">
+                            <span class="input-group-text">Jenis Kelamin:</span>
+                        </div>
+                        {{ form.jenis_kelamin }}
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 95px;">
+                            <span class="input-group-text">Status:</i></span>
+                        </div>
+                       {{ form.status }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 65px;">
+                            <span class="input-group-text">Sales Tipe:</span>
+                        </div>
+                        {{ form.sales_type }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 40px;">
+                            <span class="input-group-text">Tanggal Mulai:</span>
+                        </div>
+                        {{ form.tanggal_mulai }}
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 20px;">
+                            <span class="input-group-text">Tanggal Berakhir:</i></span>
+                        </div>
+                       {{ form.tanggal_berakhir }}
+                    </div>
                     <button class="btn btn-primary">Ubah</button>
                     <a href="/data-sales/" class="btn btn-danger">Kembali</a>
                 </form>

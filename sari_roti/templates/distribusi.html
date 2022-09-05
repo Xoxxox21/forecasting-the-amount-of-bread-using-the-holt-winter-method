@@ -16,49 +16,59 @@
     <a href="{% url 'data-jadwal-kunjungan'%}" class="nav-item nav-link"><i class="fa fa-calendar-day me-2"></i>jadwal Kunjungan</a>
 </div>
 {% endblock active %}
-
 {% block content %}
+{% for message in messages %}
+    {% if message %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endif%} 
+{% endfor %}
+<form action="{% url 'upload-csv' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}        
+    <input type="file" name="file" class="pt-4"><br><br>
+    <button type="submit" class="btn btn-primary"><i class="fa fa-upload">upload</i></button>
+</form>
 <!-- button tambah start-->
+{% if kosong %}
 <div class="m-n2">
     <a href="{% url 'droping' %}">
         <button type="button" class="btn nav-link btn-danger m-4"  style="color: aliceblue;"><i class="fa fa-plus me-2"></i>Tambah</button>
     </a>
 </div>
+{% endif %}
 <!-- button tambah end -->
-
 <!-- Recent Sales Start -->
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h6 class="mb-0">Data Distribusi</h6>
                 <h2 class="mb-0">{{nama_toko}}</h6>
-                {% comment %} {% if distribusi.id%} {% endcomment %}
                 <div class="dropdown">
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                       Pilih Toko
                     </a>
-                    
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     {% for ada in data_toko %}
                       <li><a class="dropdown-item" href="{% url 'distribusi-toko' ada.kode%}">{{ada.nama}}</a></li>
                     {% endfor %}
                     </ul>
                   </div>
-                {% comment %} {% endif %} {% endcomment %}
             </div>
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
-                            <th scope="col" rowspan="2">Tanggal</th>
+                            <th scope="col" rowspan="2" class="text-center">Tanggal</th>
                             {% for roti in data_roti %}
-                            <th scope="col" colspan="2">{{roti.kode}}</th>
+                            <th scope="col" colspan="2" class="text-center">{{roti.kode}}</th>
                             {% endfor %}
+                            <th scope="col" rowspan="2" class="text-center">Jumlah Dropping</th>
+                            <th scope="col" rowspan="2" class="text-center">Jumlah Sisa</th>
+                            <th scope="col" rowspan="2" class="text-center"></th>
                         </tr>
                         <tr class="text-dark">
                             {% for roti in data_roti %}
-                            <th scope="col">JD</th>
-                            <th scope="col">JS</th>
+                            <th scope="col" class="text-center">JD</th>
+                            <th scope="col" class="text-center">JS</th>
                             {% endfor %}
                         </tr>
                     </thead>
@@ -82,7 +92,19 @@
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
-                            
+                            {% for y in total %}
+                            {% if y.tanggal == data %}
+                            <td align="center">{{y.jumlah_drop}}</td>
+                            <td align="center">{{y.jumlah_sisa}}</td>
+                            {% endif %}
+                            {% endfor %}
+                            <td align="center">
+                                <form action="">
+                                    <div name = 'tanggal'>
+                                        <button type="button" class="btn btn-secondary m-4"  style="color: aliceblue;"><a href="{% url 'pdf' kode_toko data%}">pdf</a></button>
+                                    </div>
+                                </form>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

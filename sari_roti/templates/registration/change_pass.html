@@ -18,9 +18,9 @@
 {% endblock active %}
 {% block content %}
 <!-- Form Start -->
-{% if messages %}
-<div class="alert alert-success">{{ messages }}</div>
-{% endif %}
+{% for message in messages %}
+<div class="alert alert-success">{{ message }}</div>
+{% endfor %}
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
         <div class="col-sm-12 col-xl-6">
@@ -29,26 +29,27 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text">Old Password</span>
+                        <div class="input-group-append" style="margin-right: 70px;">
+                            <span class="input-group-text">Old Password:</span>
                         </div>
-                        {{form.old_password}}
+                    {{form.old_password}}
                     </div>
+
                     <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text">New Password</i></span>
+                        <div class="input-group-append" style="margin-right: 65px;">
+                            <span class="input-group-text">New Password:</i></span>
                         </div>
                         {{form.new_password1}}
                     </div>
                     <div class="input-group mb-2">
-                        <div class="input-group-append">
-                            <span class="input-group-text">Repeat New Password</span>
+                        <div class="input-group-append" style="margin-right: 10px;">
+                            <span class="input-group-text">Repeat New Password:</span>
                         </div>
                         {{form.new_password2}}
                     </div>
 
                     <div class="d-flex mt-3 login_container">
-                        <input class="btn btn-primary login_btn" style="margin-right: 20px; width: auto;" type="submit" value="Change Password">
+                        <input class="btn btn-primary login_btn" style="margin-right: 20px; width: auto;" type="submit" value="Ganti">
                         {% if request.user.is_staff %}
                         <a href="/index/" class="btn btn-danger">Kembali</a>
                         {% else %}

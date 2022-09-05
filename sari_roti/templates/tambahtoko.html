@@ -21,7 +21,7 @@
 <!-- Form Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-sm-12 col-xl-6">
+        <div class="col-sm-12 col-xl-7">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Tambah Toko</h6>
                 <form action="/tambah-toko/" method="post">
@@ -29,7 +29,113 @@
                         <div class="alert alert-success">{{ pesan }}</div>
                     {% endif%}
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 100px;">
+                                <span class="input-group-text">Kode:</span>
+                            </div>
+                            {{ form.kode }}
+                        </div>
+    
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 95px;">
+                                <span class="input-group-text">Nama:</i></span>
+                            </div>
+                           {{ form.nama }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="" style="margin-right: 85px;">
+                                <span class="input-group-text">Pemilik:</span>
+                            </div>
+                            {{ form.pemilik }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 95px;">
+                                <span class="input-group-text">No Hp:</span>
+                            </div>
+                            {{ form.no_hp }}
+                        </div>
+    
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 100px;">
+                                <span class="input-group-text">Email:</i></span>
+                            </div>
+                           {{ form.Email }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 90px;">
+                                <span class="input-group-text">Alamat:</span>
+                            </div>
+                            {{ form.alamat }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 65px;">
+                                <span class="input-group-text">Jenis Toko:</span>
+                            </div>
+                            {{ form.Jenis_toko }}
+                        </div>
+    
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 60px;">
+                                <span class="input-group-text">Bank Name:</i></span>
+                            </div>
+                           {{ form.bank_name }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 20px;">
+                                <span class="input-group-text">Bank Akun Name:</span>
+                            </div>
+                            {{ form.bank_akun_name }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 75px;">
+                                <span class="input-group-text">No NPWP:</span>
+                            </div>
+                            {{ form.npwp_no }}
+                        </div>
+    
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 55px;">
+                                <span class="input-group-text">Nama NPWP:</i></span>
+                            </div>
+                           {{ form.name_npwp }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 90px;">
+                                <span class="input-group-text">Provinsi:</span>
+                            </div>
+                            {{ form.provinsi }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 30px;">
+                                <span class="input-group-text">Kabupaten/Kota:</i></span>
+                            </div>
+                           {{ form.kabupaten_kota }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="" style="margin-right: 65px;">
+                                <span class="input-group-text">Kecamatan:</span>
+                            </div>
+                            {{ form.kecamatan }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 100px;">
+                                <span class="input-group-text">Village:</span>
+                            </div>
+                            {{ form.village }}
+                        </div>
+    
+                        <div class="input-group mb-2">
+                            <div class="input-group-append" style="margin-right: 90px;">
+                                <span class="input-group-text">Latitude:</i></span>
+                            </div>
+                           {{ form.latitude }}
+                        </div>
+                        <div class="input-group mb-4">
+                            <div class="input-group-append" style="margin-right: 70px;">
+                                <span class="input-group-text">Longtitude:</span>
+                            </div>
+                            {{ form.longtitude }}
+                        </div>
                     <button class="btn btn-primary"> Tambah</button>
                     <a href="/data-toko/" class="btn btn-danger">Kembali</a>
                 </form>

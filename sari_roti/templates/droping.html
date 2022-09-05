@@ -24,14 +24,45 @@
         <div class="col-sm-12 col-xl-6">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Droping Awal</h6>
-                <form  action="/droping/" method="post">
+                <form  action="{% url 'droping' %} " method="post">
                     {% if pesan %}
                         <div class="alert alert-success">{{ pesan }}</div>
                     {% endif%}
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 50px;">
+                            <span class="input-group-text">Tanggal:</span>
+                        </div>
+                        {{ form.tanggal }}
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 35px;">
+                            <span class="input-group-text">Kode Toko:</i></span>
+                        </div>
+                       {{ form.toko_id }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="" style="margin-right: 40px;">
+                            <span class="input-group-text">Kode Roti:</span>
+                        </div>
+                        {{ form.roti_id }}
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 40px;">
+                            <span class="input-group-text">Dropping:</span>
+                        </div>
+                        {{ form.dropping }}
+                    </div>
+
+                    <div class="input-group mb-2">
+                        <div class="input-group-append" style="margin-right: 40px;">
+                            <span class="input-group-text">Roti Sisa:</i></span>
+                        </div>
+                       {{ form.roti_sisa }}
+                    </div>
                     <button class="btn btn-primary"> Tambah</button>
-                    <a href="/data-distribusi/" class="btn btn-danger">Kembali</a>
+                    <a href="/data-distribusi/ " class="btn btn-danger">Kembali</a>
                 </form>
             </div>
         </div>

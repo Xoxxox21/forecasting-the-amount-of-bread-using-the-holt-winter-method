@@ -1,5 +1,3 @@
-from unicodedata import name
-from wsgiref.handlers import format_date_time
 from django.db import models
             
 class datatoko(models.Model):
@@ -95,8 +93,26 @@ class datadistribusi (models.Model):
     )
     dropping = models.IntegerField()
     roti_sisa = models.IntegerField(blank=True, null=True)
+    
+class jumlahdistribusiperhari(models.Model):
+    tanggal = models.DateField(primary_key=True)
+    toko_id = models.ForeignKey(
+        datatoko, 
+        on_delete=models.CASCADE
+    )
+    jumlah_drop = models.CharField(max_length=100)
+    jumlah_sisa = models.CharField(max_length=100)
 
 class jadwal_kunjungan(models.Model):
+    pilih_hari = [
+        ('Monday','Monday'),
+        ('Tuesday','Tuesday'),
+        ('Wednesday','Wednesday'),
+        ('Thursday','Thursday'),
+        ('Friday','Friday'),
+        ('Saturday','Saturday'),
+        ('Sunday','Sunday'),
+    ]
     sales_id = models.ForeignKey(
         datasales,
         on_delete=models.CASCADE
@@ -105,6 +121,9 @@ class jadwal_kunjungan(models.Model):
         datatoko,
         on_delete=models.CASCADE
     )   
-    hari = models.CharField(max_length=100)
+    hari = models.CharField(
+        max_length=10,
+        choices=pilih_hari,
+        default='Monday')
     def __str__(self):
         return self.hari

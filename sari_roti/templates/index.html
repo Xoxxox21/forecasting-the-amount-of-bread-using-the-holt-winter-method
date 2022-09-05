@@ -23,15 +23,6 @@
     <div class="row g-4">
         <div class="col-sm-6 col-xl-3">
             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                <i class="fa fa-chart-line fa-3x text-primary"></i>
-                <div class="ms-3">
-                    <p class="mb-2">Today Sale</p>
-                    <h6 class="mb-0">$1234</h6>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-xl-3">
-            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                 <i class="fa fa-warehouse fa-3x text-primary"></i>
                 <div class="ms-3">
                     <p class="mb-2">Total Toko</p>
@@ -62,189 +53,117 @@
 </div>
 <!-- Sale & Revenue End -->
 
-<!-- Recent Sales Start -->
-<div class="container-fluid pt-4 px-4">
-    <div class="bg-light text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Data Distribusi</h6>
-            <h2 class="mb-0">{{nama_toko}}</h6>
-            {% comment %} {% if distribusi.id%} {% endcomment %}
-            <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                  Pilih Toko
-                </a>
-                
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                {% for ada in data_toko %}
-                  <li><a class="dropdown-item" href="{% url 'distribusi-toko' ada.kode%}">{{ada.nama}}</a></li>
-                {% endfor %}
-                </ul>
-              </div>
-            {% comment %} {% endif %} {% endcomment %}
-        </div>
-        <div class="table-responsive">
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                <thead>
-                    <tr class="text-dark">
-                        <th scope="col" rowspan="2">Tanggal</th>
-                        {% for roti in data_roti %}
-                        <th scope="col" colspan="2">{{roti.kode}}</th>
-                        {% endfor %}
-                    </tr>
-                    <tr class="text-dark">
-                        {% for roti in data_roti %}
-                        <th scope="col">JD</th>
-                        <th scope="col">JS</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                {% for data in temp %}
-                    <tr>
-                        <td align="center">{{data}}</td>
-                        {% for name in data_distribusi %}
-                            {% if data == name.tanggal %}
-                                <td align="center">{{name.dropping}}</td>
-                                {% if name.roti_sisa == null %}
-                                <td align="center">
-                                    <div class="m-n2">
-                                        <a href="{% url 'isi-sisa' name.id %}">
-                                            <button type="button" class="btn btn-primary">Sisa</button>
-                                        </a>
-                                    </div>
-                                </td>
-                                {% else %}
-                                    <td align="center">{{name.roti_sisa}}</td>
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                        
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+<!-- Table Start -->
+<div class="container-fluid pt-3 px-3">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Data Toko</h6>
+                    <a href="{% url 'data-toko' %}">Show All</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-dark">
+                                <th scope="col">Kode Toko</th>
+                                <th scope="col">Nama Toko</th>
+                                <th scope="col">pemilik Toko</th>
+                                <th scope="col">No Hp</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Alamat</th>
+                                <th scope="col">Jenis Toko</th>
+                                <th scope="col">Bank Name</th>
+                                <th scope="col">Bank Akun Name</th>
+                                <th scope="col">NPWP No</th>
+                                <th scope="col">Name NPWP</th>
+                                <th scope="col">Provinsi</th>
+                                <th scope="col">Kabupaten Kota</th>
+                                <th scope="col">Kecamatan</th>
+                                <th scope="col">village</th>
+                                <th scope="col">latitude</th>
+                                <th scope="col">longtitude</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            {% for name in data_toko %}
+                            <tr>
+                                <td align="center">{{name.kode}}</td>
+                                <td align="center">{{name.nama}}</td>
+                                <td align="center">{{name.pemilik}}</td>
+                                <td align="center">{{name.no_hp}}</td>
+                                <td align="center">{{name.Email}}</td>
+                                <td align="center">{{name.alamat}}</td>
+                                <td align="center">{{name.Jenis_toko}}</td>
+                                <td align="center">{{name.bank_name}}</td>
+                                <td align="center">{{name.bank_akun_name}}</td>
+                                <td align="center">{{name.npwp_no}}</td>
+                                <td align="center">{{name.name_npwp}}</td>
+                                <td align="center">{{name.provinsi}}</td>
+                                <td align="center">{{name.kabupaten_kota}}</td>
+                                <td align="center">{{name.kecamatan}}</td>
+                                <td align="center">{{name.village}}</td>
+                                <td align="center">{{name.latitude}}</td>
+                                <td align="center">{{name.longtitude}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<!-- Table End -->
 
 <div class="container-fluid pt-4 px-4">
-    <div class="bg-light text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Data Toko</h6>
-            <a href="{% url 'data-toko' %}">Show All</a>
-        </div>
-        <div class="table-responsive">
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                <thead>
-                    <tr class="text-dark">
-                        <th scope="col">Kode Toko</th>
-                        <th scope="col">Nama Toko</th>
-                        <th scope="col">pemilik Toko</th>
-                        <th scope="col">No Hp</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Alamat</th>
-                        <th scope="col">Jenis Toko</th>
-                        <th scope="col">Bank Name</th>
-                        <th scope="col">Bank Akun Name</th>
-                        <th scope="col">NPWP No</th>
-                        <th scope="col">Name NPWP</th>
-                        <th scope="col">Provinsi</th>
-                        <th scope="col">Kabupaten Kota</th>
-                        <th scope="col">Kecamatan</th>
-                        <th scope="col">village</th>
-                        <th scope="col">latitude</th>
-                        <th scope="col">longtitude</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead> 
-                <tbody>
-                    {% for name in data_toko %}
-                    <tr>
-                        <td align="center">{{name.kode}}</td>
-                        <td align="center">{{name.nama}}</td>
-                        <td align="center">{{name.pemilik}}</td>
-                        <td align="center">{{name.no_hp}}</td>
-                        <td align="center">{{name.Email}}</td>
-                        <td align="center">{{name.alamat}}</td>
-                        <td align="center">{{name.Jenis_toko}}</td>
-                        <td align="center">{{name.bank_name}}</td>
-                        <td align="center">{{name.bank_akun_name}}</td>
-                        <td align="center">{{name.npwp_no}}</td>
-                        <td align="center">{{name.name_npwp}}</td>
-                        <td align="center">{{name.provinsi}}</td>
-                        <td align="center">{{name.kabupaten_kota}}</td>
-                        <td align="center">{{name.kecamatan}}</td>
-                        <td align="center">{{name.village}}</td>
-                        <td align="center">{{name.latitude}}</td>
-                        <td align="center">{{name.longtitude}}</td>
-                        <td>
-                            <a href="{% url 'update-toko' name.kode %}">
-                                <button type="button" class="btn btn-primary">Ubah</button>
-                            </a>
-                            <a href=""><button type="button" class="btn btn-success" name="hapus_toko">Hapus</button></a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid pt-4 px-4">
-    <div class="bg-light text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Data Sales</h6>
-            <a href="{% url 'data-sales' %}">Show All</a>
-        </div>
-        <div class="table-responsive">
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                <thead>
-                    <tr class="text-dark">
-                        <th scope="col">Nik</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Alamat</th>
-                        <th scope="col">No Hp</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Jenis kelamin</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Jenis sales</th>
-                        <th scope="col">Tanggal mulai</th>
-                        <th scope="col">Tanggal berakhir</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for message in messages %}
-                            {% if message %}
-                                <div class="alert alert-success">{{ message }}</div>
-                            {% endif%}
-                    {% endfor %}
-                    {% for name in data_sales %}
-                    <tr>
-                        
-                        <td align="center">{{name.nik}}</td>
-                        <td align="center">{{name.nama}}</td>
-                        <td align="center">{{name.alamat}}</td>
-                        <td align="center">{{name.no_hp}}</td>
-                        <td align="center">{{name.Email}}</td>
-                        <td align="center">{{name.username}}</td>
-                        <td align="center">{{name.jenis_kelamin}}</td>
-                        <td align="center">{{name.pilih_status}}</td>
-                        <td align="center">{{name.pilih_sales_type}}</td>
-                        <td align="center">{{name.tanggal_mulai}}</td>
-                        <td align="center">{{name.tanggal_berakhir}}</td>
-                        <td>
-                            <a href="{% url 'update-sales' name.nik %}">
-                                <button type="button" class="btn btn-primary">Ubah</button>
-                            </a>
-                            <a href="{% url 'hapus-sales' name.nik %}"><button type="button" class="btn btn-success" name="hapus_sales">Hapus</button></a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Data Sales</h6>
+                    <a href="{% url 'data-sales' %}">Show All</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-dark">
+                                <th scope="col">Nik</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Alamat</th>
+                                <th scope="col">No Hp</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Jenis kelamin</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Jenis sales</th>
+                                <th scope="col">Tanggal mulai</th>
+                                <th scope="col">Tanggal berakhir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for message in messages %}
+                                    {% if message %}
+                                        <div class="alert alert-success">{{ message }}</div>
+                                    {% endif%}
+                            {% endfor %}
+                            {% for name in data_sales %}
+                            <tr>
+                                
+                                <td align="center">{{name.nik}}</td>
+                                <td align="center">{{name.nama}}</td>
+                                <td align="center">{{name.alamat}}</td>
+                                <td align="center">{{name.no_hp}}</td>
+                                <td align="center">{{name.Email}}</td>
+                                <td align="center">{{name.jenis_kelamin}}</td>
+                                <td align="center">{{name.status}}</td>
+                                <td align="center">{{name.sales_type}}</td>
+                                <td align="center">{{name.tanggal_mulai}}</td>
+                                <td align="center">{{name.tanggal_berakhir}}</td>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -270,12 +189,7 @@
                         <td align>{{name.sales_id}}</td>
                         <td align>{{name.toko_id}}</td>
                         <td align>{{name.hari}}</td>
-                        <td align>    
-                            <a href="{% url 'update-jadwal' name.id %}">
-                                <button type="button" class="btn btn-primary">Ubah</button>
-                            </a>
-                            <a href="{% url 'hapus-jadwal' name.id %}"><button type="button" class="btn btn-success" name="hapus_toko">Hapus</button></a>
-                        </td>
+                        
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -284,43 +198,39 @@
     </div>
 </div>
 
-<div class="container-fluid pt-4 px-4">
-    <div class="bg-light text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Data Roti</h6>
-            <a href="{% url 'data-roti' %}">Show All</a>
-        </div>
-        <div class="table-responsive">
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                <thead>
-                    <tr class="text-dark">
-                        <th scope="col">Kode Roti</th>
-                        <th scope="col">Nama Roti</th>
-                        <th scope="col">Harga Roti</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead> 
-                <tbody>
-                    {% for message in messages %}
-                            {% if message %}
-                                <div class="alert alert-success">{{ message }}</div>
-                            {% endif%}
-                    {% endfor %}
-                    {% for name in data_roti %}
-                    <tr>
-                        <td align="center">{{name.kode}}</td>
-                        <td align="center">{{name.nama}}</td>
-                        <td align="center">{{name.harga}}</td>
-                        <td>
-                            <a href="{% url 'update-roti' name.kode %}">
-                                <button type="button" class="btn btn-primary">Ubah</button>
-                            </a>
-                            <a href="{% url 'hapus-roti' name.kode %}"><button type="button" class="btn btn-success" name="hapus_roti">Hapus</button></a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+<div class="container-fluid pt-3 px-3">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Data Roti</h6>
+                    <a href="{% url 'data-roti' %}">Show All</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-dark">
+                                <th scope="col">Kode Roti</th>
+                                <th scope="col">Nama Roti</th>
+                                <th scope="col">Harga Roti</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            {% for message in messages %}
+                                    {% if message %}
+                                        <div class="alert alert-success">{{ message }}</div>
+                                    {% endif%}
+                            {% endfor %}
+                            {% for name in data_roti %}
+                            <tr>
+                                <td align="left">{{name.kode}}</td>
+                                <td align="left">{{name.nama}}</td>
+                                <td align="left">Rp. {{name.harga}}</td>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

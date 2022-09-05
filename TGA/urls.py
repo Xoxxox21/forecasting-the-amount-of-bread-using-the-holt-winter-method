@@ -21,7 +21,7 @@ urlpatterns = [
     path('data-toko/hapus/<str:kode>', hapus_toko, name='hapus-toko'),
     
     path('data-distribusi/', distribusi, name='data-distribusi'),
-    path('droping/', droping, name='droping'),
+    path('data-distribusi/droping/', droping, name='droping'),
     path('data-distribusi/tambah/<int:id_distribusi>', isi_sisa, name='isi-sisa'),
     path('data-distribusi/<str:kode>/', DistribusiPerToko, name='distribusi-toko'),
     path('data-distribusi-sales/', DistribusiUser, name='distribusi-sales'),
@@ -37,9 +37,10 @@ urlpatterns = [
     path('data-jadwal/ubah/<int:id_jadwal>', updatejadwal, name='update-jadwal'),
     path('data-jadwal/hapus/<int:id_jadwal>', hapus_jadwal, name='hapus-jadwal'),
     
-    # path('register/',register, name='register'),
     path('login/',login_page, name='login'),
     path('Logout/', Logout_page, name='Logout'),
     path('ganti-password/', PasswordsChangeView, name='ganti-password'),
     
+    path('pdf/<str:kode>&<str:tanggal>', pdf, name='pdf'),
+    path('upload-csv/', distribusi_upload, name='upload-csv'),
 ]

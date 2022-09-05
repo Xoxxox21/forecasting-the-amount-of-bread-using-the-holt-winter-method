@@ -27,7 +27,25 @@
                         <div class="alert alert-success">{{ pesan }}</div>
                     {% endif%}
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        <div class="input-group mb-3">
+                            <div class="input-group-append" style="margin-right: 70px;">
+                                <span class="input-group-text">Kode Roti:</span>
+                            </div>
+                            {{ form.kode }}
+                        </div>
+    
+                        <div class="input-group mb-3">
+                            <div class="input-group-append" style="margin-right: 100px;">
+                                <span class="input-group-text">nama:</i></span>
+                            </div>
+                           {{ form.nama }}
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="" style="margin-right: 100px;">
+                                <span class="input-group-text">harga:</span>
+                            </div>
+                            {{ form.harga }}
+                        </div>
                     <button class="btn btn-primary"> Tambah</button>
                     <a href="/data-roti/" class="btn btn-danger">Kembali</a>
                 </form>
