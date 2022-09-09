@@ -255,7 +255,7 @@ def DistribusiPerToko(request, kode):
             kode_toko = toko.kode
     
     # looping untuk mengambil data tanggal dari datadistribusi yang dimasukkan kedalam kedalam temp agar ketika ditampilkan tidak sama
-    if len(data_distribusi) == 0 or len(data_distribusi < len(data_roti)):
+    if len(data_distribusi) == 0 or len(data_distribusi.filter(tanggal=hari)) != len(data_roti):
         kosong = True
         for data_ in data_distribusi:
             IsMatch = False
