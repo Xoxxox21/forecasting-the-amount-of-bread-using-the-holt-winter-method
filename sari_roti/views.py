@@ -239,13 +239,13 @@ def isi_sisa(request, id_distribusi):
 @login_required(login_url="login")
 @admin_only
 def DistribusiPerToko(request, kode):
-    data_distribusi = datadistribusi.objects.filter(toko_id=kode)
+    data_distribusi = datadistribusi.objects.filter(toko_id=kode).order_by('roti_id')
     data_toko = datatoko.objects.all()
-    data_roti = dataroti.objects.all()
+    data_roti = dataroti.objects.all().order_by('kode')
     temp = []
     roti = []
     kosong = False
-    hari = datetime.date.today()
+    hari = datetime.date(2022,9,1)
     total = jumlahdistribusiperhari.objects.filter(toko_id=kode)
     
     #looping untuk mengambil data nama dari data toko
@@ -255,7 +255,7 @@ def DistribusiPerToko(request, kode):
             kode_toko = toko.kode
     
     # looping untuk mengambil data tanggal dari datadistribusi yang dimasukkan kedalam kedalam temp agar ketika ditampilkan tidak sama
-    if len(data_distribusi) == 0 or len(data_distribusi.filter(tanggal=hari)) != len(data_roti):
+    if len(data_distribusi) == 0 or len(data_distribusi.filter(tanggal=hari)) < len(data_roti):
         kosong = True
         for data_ in data_distribusi:
             IsMatch = False
@@ -268,7 +268,7 @@ def DistribusiPerToko(request, kode):
             else:
                 roti.append(data_.roti_id)
         
-        for data in data_distribusi:
+        for data in data_distribusi.order_by('-tanggal'):
             IsMatch = False
             # ambil data tanggal
             for i in range(len(temp)):
@@ -289,17 +289,16 @@ def DistribusiPerToko(request, kode):
                 continue
             else:
                 roti.append(data_.roti_id)
-        
-        for data in data_distribusi:
+        for da in data_distribusi.order_by('-tanggal'):
             IsMatch = False
             # ambil data tanggal
             for i in range(len(temp)):
-                if temp[i] == data.tanggal:
+                if temp[i] == da.tanggal:
                     IsMatch = True
             if IsMatch:
                 continue
             else:
-                temp.append(data.tanggal)
+                temp.append(da.tanggal)
         for date in range(len(temp)):
             if jumlahdistribusiperhari.objects.filter(tanggal=temp[date],toko_id=data_toko.get(kode=kode)).exists():
                 continue
@@ -315,7 +314,6 @@ def DistribusiPerToko(request, kode):
                         else:
                             jumlah_sisa += has.roti_sisa
                 jumlahdistribusiperhari.objects.create(tanggal = temp[date],toko_id=data_toko.get(kode=kode),jumlah_drop=jumlah_drop,jumlah_sisa=jumlah_sisa)
-        
     konteks = {
         "data_distribusi": data_distribusi,
         "data_toko": data_toko,
@@ -364,16 +362,15 @@ def DistribusiUser(request):
 @login_required(login_url="login")
 @allowed_users(allowed_roles=["sales"])
 def DistribusiUserToko(request, kode):
-    data_distribusi = datadistribusi.objects.filter(toko_id=kode)
+    data_distribusi = datadistribusi.objects.filter(toko_id=kode).order_by('roti_id')
     data_toko = datatoko.objects.all()
     data_kunjungan = jadwal_kunjungan.objects.filter(toko_id=kode, sales_id=request.user.username)
-    data_roti = dataroti.objects.all()
+    data_roti = dataroti.objects.all().order_by('kode')
     data_dropping = {}
     tanggal = []
     droping = []
-    temp = []
     roti = []
-    hari = datetime.date.today()
+    hari = datetime.date(2022,9,29)
     
     # looping untuk mengambil data nama dari data toko
     for toko in data_toko:
@@ -391,76 +388,70 @@ def DistribusiUserToko(request, kode):
                 IsMatch = False
                 # ambil data roti sesuai dengan yang didata distribusi
                 for i in range(len(roti)):
-                    if roti[i] == data_.roti_id and temp[i] == data_.tanggal:
+                    if roti[i] == data_.roti_id:
                         IsMatch = True
                 if IsMatch:
                     continue
                 else:
                     roti.append(data_.roti_id)
-                    temp.append(data_.tanggal)
             if udah_masuk_data == True:
                 data_distribusi = datadistribusi.objects.filter(toko_id=kode, tanggal=hari)
                 break
             elif len(data_distribusi) >= len(data_roti):
                 drop = 0
                 periode = len(data_kunjungan)*4
-                day = hari.day
-                for i in range(periode):
-                    for i in range(len(roti)):
-                        ada_roti = 0
-                        data_dropping[str(roti[i])] = {
-                            "tanggal": [],
-                            "dropping": [],
-                        }
-                        for data in data_distribusi:
-                            if data.roti_id == roti[i]:
-                                tanggal.append(data.tanggal)
-                                droping.append(data.dropping)
-                                ada_roti=+1
-                        if ada_roti == 0:
-                            hasil = 0
-                            continue
-                        else:
-                            data_dropping[str(roti[i])]["tanggal"] = tanggal
-                            data_dropping[str(roti[i])]["dropping"] = droping
-                            tanggal = []
-                            droping = []
-                            df = pd.DataFrame(data_dropping[str(roti[i])])
-                            df.set_index("tanggal", inplace=True)
-                            df = df.fillna(method="ffill")
-                            # model = ExponentialSmoothing(df["dropping"], trend = "add", seasonal = "add", seasonal_periods = periode).fit()
-                            # df_train = df[:100]
-                            df_test = df[140:]
-                            # model_train = ExponentialSmoothing(df_train["dropping"], trend = "add", seasonal = "add", seasonal_periods = periode).fit()
-                            model_test = ExponentialSmoothing(df_test["dropping"], trend = "add", seasonal = "add", seasonal_periods = periode).fit()
-                            predik_test = model_test.forecast(steps = 1)
-                            # mape = mean_absolute_percentage_error(df_test["dropping"], predik_test)
-                            # print(roti[i])
-                            # alpha = model.params['smoothing_level']
-                            # beta = model.params['smoothing_trend']
-                            # gamma = model.params['smoothing_seasonal']
-                            # level = model.params['initial_level']
-                            # trend = model.params['initial_trend']
-                            # seasonal = model.params['initial_seasons']
-                            # print("Alpha adalah "+str(alpha))
-                            # print("beta adalah "+str(beta))
-                            # print("gamma adalah "+str(gamma))
-                            # print("initial level adalah "+str(level))
-                            # print("initial trend adalah "+str(trend))
-                            # print("initial seasonal adalah "+str(seasonal))
-                            # print("mape adalah "+str(mape))
-                            # predik = model.forecast(steps = 1)
-                            hasil = round(predik_test)
-                        if datadistribusi.objects.filter(toko_id=kode, roti_id=roti[i], tanggal=hari).exists():
-                            continue
-                        else:
-                            drop = drop + int(hasil)
-                            datadistribusi.objects.create(toko_id=data_toko.get(kode=kode), tanggal=hari, roti_id=roti[i], dropping=hasil)
-                    jumlahdistribusiperhari.objects.create(tanggal = hari,toko_id=data_toko.get(kode=kode),jumlah_drop=drop,jumlah_sisa=0)
-                    drop = 0
-                    day = hari.day+3
-                    hari = datetime.date(2022,8,day)
-                hari = datetime.date.today()
+                for i in range(len(roti)):
+                    ada_roti = 0
+                    data_dropping[str(roti[i])] = {
+                        "tanggal": [],
+                        "dropping": [],
+                    }
+                    for data in data_distribusi.order_by('tanggal'):
+                        if data.roti_id == roti[i]:
+                            tanggal.append(data.tanggal)
+                            droping.append(data.dropping)
+                            ada_roti=+1
+                    if ada_roti == 0:
+                        hasil = 0
+                        continue
+                    else:
+                        data_dropping[str(roti[i])]["tanggal"] = tanggal
+                        data_dropping[str(roti[i])]["dropping"] = droping
+                        tanggal = []
+                        droping = []
+                        df = pd.DataFrame(data_dropping[str(roti[i])])
+                        df.set_index("tanggal", inplace=True)
+                        df = df.fillna(method="ffill")
+                        # model = ExponentialSmoothing(df["dropping"], trend = "add", seasonal = "add", seasonal_periods = periode).fit()
+                        # df_train = df[:100]
+                        df_test = df[141:]
+                        # model_train = ExponentialSmoothing(df_train["dropping"], trend = "add", seasonal = "add", seasonal_periods = periode).fit()
+                        model_test = ExponentialSmoothing(df_test["dropping"], trend = "add", seasonal = "add", seasonal_periods = periode).fit()
+                        predik_test = model_test.forecast(steps = 1)
+                        # mape = mean_absolute_percentage_error(df_test["dropping"], predik_test)
+                        # print(roti[i])
+                        # alpha = model.params['smoothing_level']
+                        # beta = model.params['smoothing_trend']
+                        # gamma = model.params['smoothing_seasonal']
+                        # level = model.params['initial_level']
+                        # trend = model.params['initial_trend']
+                        # seasonal = model.params['initial_seasons']
+                        # print("Alpha adalah "+str(alpha))
+                        # print("beta adalah "+str(beta))
+                        # print("gamma adalah "+str(gamma))
+                        # print("initial level adalah "+str(level))
+                        # print("initial trend adalah "+str(trend))
+                        # print("initial seasonal adalah "+str(seasonal))
+                        # print("mape adalah "+str(mape))
+                        # predik = model.forecast(steps = 1)
+                        hasil = round(predik_test)
+                    if datadistribusi.objects.filter(toko_id=kode, roti_id=roti[i], tanggal=hari).exists():
+                        continue
+                    else:
+                        drop = drop + int(hasil)
+                        datadistribusi.objects.create(toko_id=data_toko.get(kode=kode), tanggal=hari, roti_id=roti[i], dropping=hasil)
+                jumlahdistribusiperhari.objects.create(tanggal = hari,toko_id=data_toko.get(kode=kode),jumlah_drop=drop,jumlah_sisa=0)
+                drop = 0
                 data_distribusi = datadistribusi.objects.filter(toko_id=kode, tanggal=hari)
                 break
         else:
@@ -471,7 +462,6 @@ def DistribusiUserToko(request, kode):
         "data_roti": roti,
         "nama_toko": "Toko " + nama_toko,
         "kode_toko": kode_toko,
-        "temp": temp,
         "ada": ada,
         "date": hari,
         "jumlah": jumlahdistribusiperhari.objects.filter(tanggal = hari,toko_id=data_toko.get(kode=kode)),
@@ -667,7 +657,7 @@ def distribusi_upload(request):
     # setup a stream which is when we loop through each line we are able to handle a data in a stream
     io_string = io.StringIO(data_set)
     next(io_string)
-    for column in csv.reader(io_string, delimiter=',', quotechar="|"):
+    for column in csv.reader(io_string, delimiter=';', quotechar="|"):
         _, created = datadistribusi.objects.update_or_create(
             tanggal = column[0],
             toko_id = datatoko.objects.get(kode=column[1]),

@@ -54,7 +54,7 @@
                   </div>
             </div>
             <div class="table-responsive">
-                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <table class="table table-fixed text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
                             <th scope="col" rowspan="2" class="text-center">Tanggal</th>
@@ -63,7 +63,7 @@
                             {% endfor %}
                             <th scope="col" rowspan="2" class="text-center">Jumlah Dropping</th>
                             <th scope="col" rowspan="2" class="text-center">Jumlah Sisa</th>
-                            <th scope="col" rowspan="2" class="text-center"></th>
+                            <th scope="col" rowspan="2" class="text-center">Report PDF</th>
                         </tr>
                         <tr class="text-dark">
                             {% for roti in data_roti %}
@@ -93,10 +93,10 @@
                                 {% endif %}
                             {% endfor %}
                             {% for y in total %}
-                            {% if y.tanggal == data %}
-                            <td align="center">{{y.jumlah_drop}}</td>
-                            <td align="center">{{y.jumlah_sisa}}</td>
-                            {% endif %}
+                                {% if y.tanggal == data %}
+                                <td align="center">{{y.jumlah_drop}}</td>
+                                <td align="center">{{y.jumlah_sisa}}</td>
+                                {% endif %}
                             {% endfor %}
                             <td align="center">
                                 <form action="">

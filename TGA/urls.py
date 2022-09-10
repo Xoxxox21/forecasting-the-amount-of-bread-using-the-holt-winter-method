@@ -36,11 +36,6 @@ urlpatterns = [
     path('tambah-jadwal/', tambahjadwal, name='tambah-jadwal'),
     path('data-jadwal/ubah/<int:id_jadwal>', updatejadwal, name='update-jadwal'),
     path('data-jadwal/hapus/<int:id_jadwal>', hapus_jadwal, name='hapus-jadwal'),
-    
-<<<<<<< HEAD
-=======
-    # path('register/',register, name='register'),
->>>>>>> tinggal metode
     path('login/',login_page, name='login'),
     path('Logout/', Logout_page, name='Logout'),
     path('ganti-password/', PasswordsChangeView, name='ganti-password'),
