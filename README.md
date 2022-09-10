@@ -101,6 +101,5 @@
 <img src="static/images/distribusi.png" width="70%"/><br />
 <img src="static/images/sales_hasil.png" width="70%"/><br />
 <img src="static/images/changes_sales.png" width="70%"/><br />
-<img src="" width="70%"/><br />
 </p>
 
