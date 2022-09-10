@@ -93,10 +93,14 @@
 ## **Preview**
 
 <p align="center">
-<img src="./public/assets/ss/Capture1.PNG" width="70%"/><br />
-<img src="./public/assets/ss/Capture2.PNG" width="70%"/><br />
-<img src="./public/assets/ss/Capture3.PNG" width="70%"/><br />
-<img src="./public/assets/ss/Capture4.PNG" width="70%"/><br />
-<img src="./public/assets/ss/Capture5.PNG" width="70%"/><br />
+<img src="static/images/dashboard.png" width="70%"/><br />
+<img src="static/images/change_pass.png" width="70%"/><br />
+<img src="static/images/kelola_sales.png" width="70%"/><br />
+<img src="static/images/tambahsales.png" width="70%"/><br />
+<img src="static/images/jadwal.png" width="70%"/><br />
+<img src="static/images/distribusi.png" width="70%"/><br />
+<img src="static/images/sales_hasil.png" width="70%"/><br />
+<img src="static/images/changes_sales.png" width="70%"/><br />
+<img src="" width="70%"/><br />
 </p>
 
